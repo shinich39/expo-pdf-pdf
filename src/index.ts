@@ -1,5 +1,19 @@
-// Reexport the native module. On web, it will be resolved to ExpoPdfPdfModule.web.ts
-// and on native platforms to ExpoPdfPdfModule.ts
-export { default } from './ExpoPdfPdfModule';
-export { default as ExpoPdfPdfView } from './ExpoPdfPdfView';
-export * from  './ExpoPdfPdf.types';
+import { NativeModule, requireNativeModule } from 'expo';
+import { addProtocol, normalize } from './path';
+
+export type ExpoPdfPdfModuleEvents = {};
+
+export declare class ExpoPdfPdfModule extends NativeModule<ExpoPdfPdfModuleEvents> {
+  compress(sourcePath: string): string;
+  uncompress(sourcePath: string): string;
+}
+
+export const ExpoPdfPdf = requireNativeModule<ExpoPdfPdfModule>('ExpoPdfPdf');
+
+export function compress(sourcePath: string) {
+  return addProtocol(ExpoPdfPdf.compress(normalize(sourcePath)));
+}
+
+export function uncompress(sourcePath: string) {
+  return addProtocol(ExpoPdfPdf.uncompress(normalize(sourcePath)))
+}

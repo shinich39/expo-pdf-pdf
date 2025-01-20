@@ -1,73 +1,28 @@
-import { useEvent } from 'expo';
-import ExpoPdfPdf, { ExpoPdfPdfView } from 'expo-pdf-pdf';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import * as ExpoPdfPdf from 'expo-pdf-pdf';
+import { Button, Platform, Text, View } from 'react-native';
+import * as dp from 'expo-document-picker';
+import * as fs from 'expo-file-system';
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoPdfPdf, 'onChange');
-
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoPdfPdf.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoPdfPdf.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoPdfPdf.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ExpoPdfPdfView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
-        </Group>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button title={`Test`} onPress={async () => {
+        const { assets, canceled } = await dp.getDocumentAsync();
+        const file = assets?.[0];
+        if (file) {
+          try {
+            console.log("#0", file.uri);
 
-function Group(props: { name: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
+            const res = ExpoPdfPdf.uncompress(file.uri);
+            console.log("#1 uncompress", res);
+  
+            const files = await fs.readDirectoryAsync(res);
+            console.log("#2 read", files);
+          } catch(err) {
+            console.error(err);
+          }
+        }
+      }} />
     </View>
   );
 }
-
-const styles = {
-  header: {
-    fontSize: 30,
-    margin: 20,
-  },
-  groupHeader: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  group: {
-    margin: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-  },
-  view: {
-    flex: 1,
-    height: 200,
-  },
-};
