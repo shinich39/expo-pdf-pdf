@@ -1,0 +1,43 @@
+{
+  "name": "expo-pdf-pdf",
+  "version": "0.1.0",
+  "description": "PDF",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-pdf-pdf",
+    "ExpoPdfPdf"
+  ],
+  "repository": "https://github.com/shinich39/expo-pdf-pdf",
+  "bugs": {
+    "url": "https://github.com/shinich39/expo-pdf-pdf/issues"
+  },
+  "author": "shinich39 <shinich39@gmail.com> (https://github.com/shinich39)",
+  "license": "MIT",
+  "homepage": "https://github.com/shinich39/expo-pdf-pdf#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "~18.3.12",
+    "expo-module-scripts": "^4.0.3",
+    "expo": "~52.0.0",
+    "react-native": "0.76.0"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
