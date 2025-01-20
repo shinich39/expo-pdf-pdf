@@ -1,6 +1,6 @@
 # expo-pdf-pdf
 
-Extract images from PDF in expo.
+Extract page to images from PDF in expo.
 
 ## Getting Started
 
